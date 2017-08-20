@@ -6,9 +6,11 @@ import java.util.LinkedList;
 
 public class Offer {
 
+    private Client owner;
     private Collection<Picture> items;
 
-    public Offer(Collection<Picture> items) {
+    public Offer(Client owner, Collection<Picture> items) {
+        this.owner = owner;
         this.items = new LinkedList<>(items);
     }
 
@@ -17,11 +19,14 @@ public class Offer {
     }
 
     public int getItemsCount() {
-        return -1;
+        return items.size();
     }
 
     public Money getTotalCost() {
-        return null;
+        Money total = Money.ZERO;
+        for (Picture item : items)
+            total = total.add(item.calculatePrice(owner));
+        return total;
     }
 
     public Collection<Picture> getItems() {

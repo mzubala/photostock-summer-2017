@@ -13,15 +13,22 @@ public class Reservation {
     }
 
     public void add(Picture picture) {
+        if (!picture.isAvailable())
+            throw new IllegalStateException("Product is not available");
+
         items.add(picture);
+        picture.reservedPer(owner);
     }
 
     public void remove(Picture picture) {
-        items.remove(picture);
+        if (items.remove(picture))
+            picture.unreservedPer(owner);
+        else
+            throw new IllegalArgumentException("Product is not part of this reservation");
     }
 
     public Offer generateOffer() {
-        return new Offer(items);
+        return new Offer(owner, items);
     }
 
     public int getItemsCount() {

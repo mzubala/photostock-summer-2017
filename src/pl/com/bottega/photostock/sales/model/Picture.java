@@ -9,6 +9,7 @@ public class Picture {
     private Set<String> tags;
     private Money price;
     private Boolean active;
+    private Client reservedBy, owner;
 
     public Picture(Long number, Set<String> tags, Money price) {
         this(number, tags, price, true);
@@ -19,27 +20,37 @@ public class Picture {
         this.tags = new HashSet<>(tags);
         this.price = price;
         this.active = active;
-        Class c = Purchase.class;
     }
 
     public Money calculatePrice(Client client) {
-        return null;
+        return price;
     }
 
     public boolean isAvailable() {
-        return false;
+        return active && reservedBy == null;
     }
 
     public void reservedPer(Client client) {
-
+        if (!isAvailable())
+            throw new IllegalStateException("Product is not available");
+        reservedBy = client;
     }
 
     public void unreservedPer(Client client) {
+        if(owner != null)
+            throw new IllegalStateException("Product is already purchased");
+        checkReservation(client);
+        reservedBy = null;
+    }
 
+    private void checkReservation(Client client) {
+        if (reservedBy == null || !reservedBy.equals(client))
+            throw new IllegalStateException(String.format("Product is not reserved by %s", client));
     }
 
     public void soldPer(Client client) {
-
+        checkReservation(client);
+        owner = client;
     }
 
     @Override
@@ -57,4 +68,7 @@ public class Picture {
         return number.hashCode();
     }
 
+    public Long getNumber() {
+        return number;
+    }
 }
