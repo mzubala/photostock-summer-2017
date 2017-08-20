@@ -42,4 +42,11 @@ public class Client {
         transactions.add(new Transaction(amount, "Recharge account"));
     }
 
+    public ClientStatus getStatus() {
+        return status;
+    }
+
+    public int discountPercent() {
+        return status.discountPercent();
+    }
 }

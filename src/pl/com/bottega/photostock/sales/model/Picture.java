@@ -23,7 +23,7 @@ public class Picture {
     }
 
     public Money calculatePrice(Client client) {
-        return price;
+        return price.percent(100 - client.discountPercent());
     }
 
     public boolean isAvailable() {
