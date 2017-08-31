@@ -30,13 +30,17 @@ public class Money implements Comparable<Money> {
         return new Money((long) (value * 100.0), DEFAULT_CURRENCY);
     }
 
+    public static Money valueOf(double value, String currency) {
+        return new Money((long) (value * 100.0), currency);
+    }
+
     public Money add(Money other) {
         checkCurrency(other);
         return new Money(cents + other.cents, currency);
     }
 
     private void checkCurrency(Money other) {
-        if(!currency.equals(other.currency))
+        if (!currency.equals(other.currency))
             throw new IllegalArgumentException("Incompatible currencies");
     }
 
@@ -94,5 +98,13 @@ public class Money implements Comparable<Money> {
 
     public Money percent(int percent) {
         return new Money(cents * percent / 100, currency);
+    }
+
+    public Money convert(String targetCurrency, double exRate) {
+        return new Money(Math.round(cents * exRate), targetCurrency);
+    }
+
+    public String currency() {
+        return currency;
     }
 }
