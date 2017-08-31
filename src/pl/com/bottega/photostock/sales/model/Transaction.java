@@ -13,4 +13,7 @@ public class Transaction {
         this.description = description;
     }
 
+    public Money getAmount() {
+        return amount;
+    }
 }

@@ -1,18 +1,15 @@
 package pl.com.bottega.photostock.sales.ui;
 
-import pl.com.bottega.photostock.sales.infrastructure.InMemoryPictureRepository;
+import pl.com.bottega.photostock.sales.infrastructure.InMemoryProductRepository;
 import pl.com.bottega.photostock.sales.model.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class ConsoleApp {
 
     public static void main(String[] args) {
-        PictureRepository repository = new InMemoryPictureRepository();
-        Picture p1 = repository.get(1L);
-        Picture p2 = repository.get(2L);
-        Picture p3 = repository.get(3L);
+        ProductRepository repository = new InMemoryProductRepository();
+        Product p1 = repository.get(1L);
+        Product p2 = repository.get(2L);
+        Product p3 = repository.get(3L);
 
         Client client = new Client("Jan Nowak", new Address("ul. Północna 11", "Poland", "Lublin", "20-001"));
         client.recharge(Money.valueOf(1000000));

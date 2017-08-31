@@ -4,33 +4,34 @@ import java.util.*;
 
 import pl.com.bottega.photostock.sales.model.Money;
 import pl.com.bottega.photostock.sales.model.Picture;
-import pl.com.bottega.photostock.sales.model.PictureRepository;
+import pl.com.bottega.photostock.sales.model.ProductRepository;
+import pl.com.bottega.photostock.sales.model.Product;
 
-public class InMemoryPictureRepository implements PictureRepository {
+public class InMemoryProductRepository implements ProductRepository {
 
-    private static final Map<Long, Picture> REPO;
+    private static final Map<Long, Product> REPO;
 
     static {
         REPO = new HashMap<>();
         Set<String> tags = new HashSet<>();
         tags.add("kotki");
-        Picture p1 = new Picture(1L, tags, Money.valueOf(10));
-        Picture p2 = new Picture(2L, tags, Money.valueOf(5));
-        Picture p3 = new Picture(3L, tags, Money.valueOf(15));
+        Product p1 = new Picture(1L, tags, Money.valueOf(10));
+        Product p2 = new Picture(2L, tags, Money.valueOf(5));
+        Product p3 = new Picture(3L, tags, Money.valueOf(15));
         REPO.put(1L, p1);
         REPO.put(2L, p2);
         REPO.put(3L, p3);
     }
 
     @Override
-    public Picture get(Long number) {
+    public Product get(Long number) {
         if (!REPO.containsKey(number))
             throw new IllegalArgumentException("No such object in repository");
         return REPO.get(number);
     }
 
     @Override
-    public Optional<Picture> getOptional(Long number) {
+    public Optional<Product> getOptional(Long number) {
         if(REPO.containsKey(number))
             return Optional.of(REPO.get(number));
         else
@@ -39,7 +40,7 @@ public class InMemoryPictureRepository implements PictureRepository {
 
 
     @Override
-    public void save(Picture picture) {
-        REPO.put(picture.getNumber(), picture);
+    public void save(Product product) {
+        REPO.put(product.getNumber(), product);
     }
 }

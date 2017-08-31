@@ -1,20 +1,18 @@
 package pl.com.bottega.photostock.sales.model;
 
-import com.sun.deploy.util.SessionState;
-
 import java.util.*;
 
 public class Offer {
 
     private Client owner;
-    private List<Picture> items;
+    private List<Product> items;
 
-    public Offer(Client owner, Collection<Picture> items) {
+    public Offer(Client owner, Collection<Product> items) {
         this.owner = owner;
         this.items = new LinkedList<>(items);
-        this.items.sort(new Comparator<Picture>() {
+        this.items.sort(new Comparator<Product>() {
             @Override
-            public int compare(Picture o1, Picture o2) {
+            public int compare(Product o1, Product o2) {
                 return o2.calculatePrice(owner).compareTo(o1.calculatePrice(owner));
             }
         });
@@ -30,12 +28,12 @@ public class Offer {
 
     public Money getTotalCost() {
         Money total = Money.ZERO;
-        for (Picture item : items)
+        for (Product item : items)
             total = total.add(item.calculatePrice(owner));
         return total;
     }
 
-    public Collection<Picture> getItems() {
+    public Collection<Product> getItems() {
         return Collections.unmodifiableCollection(items);
     }
 
