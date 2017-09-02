@@ -12,4 +12,9 @@ public interface Product {
     void soldPer(Client client);
 
     Long getNumber();
+
+    default void ensureAvailable() {
+        if (!isAvailable())
+            throw new ProductNotAvailableException(this);
+    }
 }

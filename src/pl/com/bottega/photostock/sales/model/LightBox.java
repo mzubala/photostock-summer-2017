@@ -19,8 +19,7 @@ public class LightBox {
     public void add(Product product) {
         if(items.contains(product))
             throw new IllegalStateException("Product already added");
-        if(!product.isAvailable())
-            throw new IllegalArgumentException("Product is not available");
+        product.ensureAvailable();
         items.add(product);
     }
 
