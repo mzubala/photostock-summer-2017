@@ -2,6 +2,8 @@ package pl.com.bottega.photostock.sales.model;
 
 public interface ClientRepository {
 
-    Client get(Long number);
+    Client get(String number);
+
+    void save(Client client);
 
 }

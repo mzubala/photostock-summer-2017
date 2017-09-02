@@ -2,9 +2,11 @@ package pl.com.bottega.photostock.sales.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Client {
 
+    private String number;
     private String name;
     private Address address;
     private ClientStatus status;
@@ -16,6 +18,7 @@ public abstract class Client {
         this.status = status;
         if(balance.gt(Money.ZERO))
             transactions.add(new Transaction(balance, "First charge"));
+        this.number = UUID.randomUUID().toString();
     }
 
     public Client(String name, Address address) {
@@ -47,5 +50,9 @@ public abstract class Client {
         for(Transaction tx : transactions)
             sum = sum.add(tx.getAmount());
         return sum;
+    }
+
+    public String getNumber() {
+        return number;
     }
 }

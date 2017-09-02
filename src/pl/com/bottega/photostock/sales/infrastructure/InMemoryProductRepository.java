@@ -6,6 +6,7 @@ import pl.com.bottega.photostock.sales.model.Money;
 import pl.com.bottega.photostock.sales.model.Picture;
 import pl.com.bottega.photostock.sales.model.ProductRepository;
 import pl.com.bottega.photostock.sales.model.Product;
+import pl.com.bottega.photostock.sales.model.Client;
 
 public class InMemoryProductRepository implements ProductRepository {
 
@@ -42,5 +43,10 @@ public class InMemoryProductRepository implements ProductRepository {
     @Override
     public void save(Product product) {
         REPO.put(product.getNumber(), product);
+    }
+
+    @Override
+    public List<Product> find(Client client, Set<String> tags, Money from, Money to) {
+        return null;
     }
 }
