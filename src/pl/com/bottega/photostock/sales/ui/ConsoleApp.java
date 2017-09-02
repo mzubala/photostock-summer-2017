@@ -11,7 +11,7 @@ public class ConsoleApp {
         Product p2 = repository.get(2L);
         Product p3 = repository.get(3L);
 
-        Client client = new Client("Jan Nowak", new Address("ul. Północna 11", "Poland", "Lublin", "20-001"));
+        Client client = new VIPClient("Jan Nowak", new Address("ul. Północna 11", "Poland", "Lublin", "20-001"));
         client.recharge(Money.valueOf(1000000));
         Reservation reservation = new Reservation(client);
 

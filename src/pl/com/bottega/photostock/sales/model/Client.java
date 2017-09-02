@@ -3,30 +3,26 @@ package pl.com.bottega.photostock.sales.model;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Client {
+public abstract class Client {
 
     private String name;
     private Address address;
     private ClientStatus status;
-    private Money creditLimit;
     private List<Transaction> transactions = new LinkedList<>();
 
-    public Client(String name, Address address, ClientStatus status, Money balance, Money creditLimit) {
+    public Client(String name, Address address, ClientStatus status, Money balance) {
         this.name = name;
         this.address = address;
         this.status = status;
-        this.creditLimit = creditLimit;
         if(balance.gt(Money.ZERO))
             transactions.add(new Transaction(balance, "First charge"));
     }
 
     public Client(String name, Address address) {
-        this(name, address, ClientStatus.STANDARD, Money.ZERO, Money.ZERO);
+        this(name, address, ClientStatus.STANDARD, Money.ZERO);
     }
 
-    public boolean canAfford(Money amount) {
-        return amount.lte(balance().add(creditLimit));
-    }
+    public abstract boolean canAfford(Money amount);
 
     public void charge(Money amount, String reason) {
         if(!canAfford(amount))
