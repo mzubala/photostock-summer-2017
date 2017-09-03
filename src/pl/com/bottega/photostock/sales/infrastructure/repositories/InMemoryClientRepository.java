@@ -7,6 +7,7 @@ import pl.com.bottega.photostock.sales.model.VIPClient;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class InMemoryClientRepository implements ClientRepository {
 
@@ -27,5 +28,13 @@ public class InMemoryClientRepository implements ClientRepository {
     @Override
     public void save(Client client) {
         REPO.put(client.getNumber(), client);
+    }
+
+    @Override
+    public Optional<Client> getByLogin(String login) {
+        for(Client client : REPO.values())
+            if(client.hasLogin(login))
+                return Optional.of(client);
+        return Optional.empty();
     }
 }

@@ -20,4 +20,7 @@ public class Picture extends AbstractProduct {
         return this.tags.containsAll(tags);
     }
 
+    public Set<String> getTags() {
+        return tags;
+    }
 }

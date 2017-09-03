@@ -55,4 +55,8 @@ public abstract class Client {
     public String getNumber() {
         return number;
     }
+
+    public boolean hasLogin(String login) {
+        return name.equals(login);
+    }
 }
