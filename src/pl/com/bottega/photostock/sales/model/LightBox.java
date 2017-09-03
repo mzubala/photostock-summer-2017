@@ -3,6 +3,7 @@ package pl.com.bottega.photostock.sales.model;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class LightBox {
 
@@ -10,10 +11,12 @@ public class LightBox {
     private List<Product> items = new LinkedList<>();
 
     private Client owner;
+    private String number;
 
     public LightBox(Client owner, String name) {
         this.owner = owner;
         this.name = name;
+        this.number = UUID.randomUUID().toString();
     }
 
     public void add(Product product) {
@@ -39,4 +42,9 @@ public class LightBox {
     public List<Product> getItems() {
         return Collections.unmodifiableList(items);
     }
+
+    public String getNumber() {
+        return number;
+    }
+
 }
