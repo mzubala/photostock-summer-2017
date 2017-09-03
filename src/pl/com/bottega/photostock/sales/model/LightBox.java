@@ -8,7 +8,7 @@ import java.util.UUID;
 public class LightBox {
 
     private String name;
-    private List<Product> items = new LinkedList<>();
+    private List<Picture> items = new LinkedList<>();
 
     private Client owner;
     private String number;
@@ -19,15 +19,15 @@ public class LightBox {
         this.number = UUID.randomUUID().toString();
     }
 
-    public void add(Product product) {
-        if(items.contains(product))
+    public void add(Picture pciture) {
+        if(items.contains(pciture))
             throw new IllegalStateException("Product already added");
-        product.ensureAvailable();
-        items.add(product);
+        pciture.ensureAvailable();
+        items.add(pciture);
     }
 
-    public void remove(Product product) {
-        if(!items.remove(product))
+    public void remove(Picture picture) {
+        if(!items.remove(picture))
             throw new IllegalArgumentException("Product not added to lightbox");
     }
 

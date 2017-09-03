@@ -7,9 +7,9 @@ public class ConsoleApp {
 
     public static void main(String[] args) {
         ProductRepository repository = new InMemoryProductRepository();
-        Product p1 = repository.get(1L);
-        Product p2 = repository.get(2L);
-        Product p3 = repository.get(3L);
+        Picture p1 = (Picture) repository.get(1L);
+        Picture p2 = (Picture) repository.get(2L);
+        Picture p3 = (Picture) repository.get(3L);
 
         Client client = new VIPClient("Jan Nowak", new Address("ul. Północna 11", "Poland", "Lublin", "20-001"));
         client.recharge(Money.valueOf(1000000));
