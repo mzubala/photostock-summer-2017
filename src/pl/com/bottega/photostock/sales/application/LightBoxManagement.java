@@ -55,4 +55,7 @@ public class LightBoxManagement {
         reservationRepository.save(reservation);
     }
 
+    public List<LightBox> getLightBoxes(String clientNumber) {
+        return lightBoxRepository.getClientLightBoxes(clientNumber);
+    }
 }

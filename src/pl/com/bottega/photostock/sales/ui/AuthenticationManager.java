@@ -26,4 +26,8 @@ public class AuthenticationManager {
         }
         return false;
     }
+
+    public String getClientNumber() {
+        return client.getNumber();
+    }
 }
