@@ -33,7 +33,7 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Optional<Product> getOptional(Long number) {
-        if(REPO.containsKey(number))
+        if (REPO.containsKey(number))
             return Optional.of(REPO.get(number));
         else
             return Optional.empty();
@@ -47,6 +47,29 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public List<Product> find(Client client, Set<String> tags, Money from, Money to) {
-        return null;
+        List<Product> results = new LinkedList<>();
+        for (Product product : REPO.values()) {
+            if (product instanceof Picture) {
+                Picture picture = (Picture) product;
+                if (matchesCriteria(picture, client, tags, from, to))
+                    results.add(picture);
+            }
+        }
+        return results;
+    }
+
+    private boolean matchesCriteria(Picture picture, Client client, Set<String> tags, Money from, Money to) {
+        if (tags != null && !picture.hasTags(tags))
+            return false;
+
+        Money price = picture.calculatePrice(client);
+
+        if (from != null && from.gt(price))
+            return false;
+
+        if (to != null && to.lt(price))
+            return false;
+
+        return true;
     }
 }

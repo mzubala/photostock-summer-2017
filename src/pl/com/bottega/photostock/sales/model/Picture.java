@@ -16,4 +16,8 @@ public class Picture extends AbstractProduct {
         this.tags = new HashSet<>(tags);
     }
 
+    public boolean hasTags(Set<String> tags) {
+        return this.tags.containsAll(tags);
+    }
+
 }
