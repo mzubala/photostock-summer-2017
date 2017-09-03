@@ -2,16 +2,21 @@ package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.model.*;
 
+import java.util.List;
+import java.util.Set;
+
 public class LightBoxManagement {
 
     private LightBoxRepository lightBoxRepository;
     private ClientRepository clientRepository;
     private ProductRepository productRepository;
+    private ReservationRepository reservationRepository;
 
-    public LightBoxManagement(LightBoxRepository lightBoxRepository, ClientRepository clientRepository, ProductRepository productRepository) {
+    public LightBoxManagement(LightBoxRepository lightBoxRepository, ClientRepository clientRepository, ProductRepository productRepository, ReservationRepository reservationRepository) {
         this.lightBoxRepository = lightBoxRepository;
         this.clientRepository = clientRepository;
         this.productRepository = productRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public String create(String clientNumber, String lightBoxName) {
@@ -29,6 +34,21 @@ public class LightBoxManagement {
         Picture picture = (Picture) product;
         lightBox.add(picture);
         lightBoxRepository.save(lightBox);
+    }
+
+    public void reserve(String lightBoxNumber, Set<Long> pictureNumbers, String reservationNumber) {
+        LightBox lightBox = lightBoxRepository.get(lightBoxNumber);
+        Reservation reservation = reservationRepository.get(reservationNumber);
+        List<Picture> pictures = lightBox.getPictures(pictureNumbers);
+        if(pictureNumbers.size() != pictures.size())
+            throw new IllegalArgumentException("Invalid product numbers");
+        for(Picture picture : pictures)
+            picture.ensureAvailable();
+        for(Picture picture : pictures) {
+            reservation.add(picture);
+            productRepository.save(picture);
+        }
+        reservationRepository.save(reservation);
     }
 
 }

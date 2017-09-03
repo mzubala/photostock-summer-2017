@@ -1,9 +1,6 @@
 package pl.com.bottega.photostock.sales.model;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class LightBox {
 
@@ -47,4 +44,11 @@ public class LightBox {
         return number;
     }
 
+    public List<Picture> getPictures(Set<Long> pictureNumbers) {
+        List<Picture> results = new LinkedList<>();
+        for(Picture pic : items)
+            if(pictureNumbers.contains(pic.getNumber()))
+                results.add(pic);
+        return results;
+    }
 }
