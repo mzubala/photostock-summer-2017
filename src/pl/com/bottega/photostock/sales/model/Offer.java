@@ -14,7 +14,7 @@ public class Offer {
     }
 
     public boolean sameAs(Offer offer, Money tolerance) {
-        return false;
+        return getTotalCost().sub(offer.getTotalCost()).abs().lte(tolerance);
     }
 
     public int getItemsCount() {

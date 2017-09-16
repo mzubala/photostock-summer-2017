@@ -14,13 +14,15 @@ public class LightBoxManagementScreen {
     private List<LightBox> lightBoxes;
     private LightBox lightBox;
     private AddProductToLightBoxScreen addProductToLightBoxScreen;
+    private PurchaseLightBoxScreen purchaseLightBoxScreen;
 
     public LightBoxManagementScreen(Scanner scanner, LightBoxManagement lightBoxManagement,
-                                    AuthenticationManager authenticationManager, AddProductToLightBoxScreen addProductToLightBoxScreen) {
+                                    AuthenticationManager authenticationManager, AddProductToLightBoxScreen addProductToLightBoxScreen, PurchaseLightBoxScreen purchaseLightBoxScreen) {
         this.scanner = scanner;
         this.lightBoxManagement = lightBoxManagement;
         this.authenticationManager = authenticationManager;
         this.addProductToLightBoxScreen = addProductToLightBoxScreen;
+        this.purchaseLightBoxScreen = purchaseLightBoxScreen;
     }
 
     public void show() {
@@ -47,7 +49,7 @@ public class LightBoxManagementScreen {
                     addNewLightBox();
                     break;
                 case 2:
-                    if(lightBoxes.size() > 0) {
+                    if (lightBoxes.size() > 0) {
                         showLightBox();
                     }
                     break;
@@ -79,6 +81,8 @@ public class LightBoxManagementScreen {
                     addProductToLightBoxScreen.show(lightBox);
                     break;
                 case 2:
+                    purchaseLightBoxScreen.show(lightBox);
+                case 3:
                     return;
                 default:
                     System.out.println("Sorry, ale nie rozumiem.");
@@ -88,7 +92,8 @@ public class LightBoxManagementScreen {
 
     private void showLightBoxMenu() {
         System.out.println("1. Dodaj produkt do LightBox'a");
-        System.out.println("2. Wróć do poprzedniego menu.");
+        System.out.println("2. Zakup produkty z lajt boxa.");
+        System.out.println("3. Wróć do poprzedniego menu.");
         System.out.println("Co chcesz zrobić?");
     }
 
