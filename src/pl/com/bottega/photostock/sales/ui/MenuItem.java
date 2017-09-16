@@ -13,11 +13,11 @@ public class MenuItem {
     }
 
     public void show() {
-
+        System.out.println(String.format("%d. %s", index, label));
     }
 
     public void executeAction() {
-
+        action.run();
     }
 
 }
