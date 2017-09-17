@@ -27,33 +27,7 @@ public class CSVProductRepository implements ProductRepository {
 
     @Override
     public Product get(Long number) {
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] lineSplit = line.split(",");
-                if (lineSplit[0].equals(number.toString())) {
-                    Long nr = Long.parseLong(lineSplit[0]);
-                    String[] tags = lineSplit[1].split(";");
-                    Money price = Money.valueOf(Integer.parseInt(lineSplit[2]));
-                    boolean active = Boolean.valueOf(lineSplit[3]);
-                    String reservedByNumber = lineSplit[4];
-                    String ownerNumber = lineSplit[5];
-                    return new Picture(
-                            nr,
-                            tags,
-                            price,
-                            findClient(reservedByNumber),
-                            findClient(ownerNumber),
-                            active
-                    );
-                }
-            }
-            throw new IllegalArgumentException("No such object in repository");
-        } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("No such object in repository");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+       return getOptional(number).orElseThrow(() -> new IllegalArgumentException("No such product in repo"));
     }
 
     private Client findClient(String number) {
@@ -65,7 +39,33 @@ public class CSVProductRepository implements ProductRepository {
 
     @Override
     public Optional<Product> getOptional(Long number) {
-        return null;
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] lineSplit = line.split(",");
+                if (lineSplit[0].equals(number.toString())) {
+                    Long nr = Long.parseLong(lineSplit[0]);
+                    String[] tags = lineSplit[1].split(";");
+                    Money price = Money.valueOf(Integer.parseInt(lineSplit[2]));
+                    boolean active = Boolean.valueOf(lineSplit[3]);
+                    String reservedByNumber = lineSplit[4];
+                    String ownerNumber = lineSplit[5];
+                    return Optional.of(new Picture(
+                            nr,
+                            tags,
+                            price,
+                            findClient(reservedByNumber),
+                            findClient(ownerNumber),
+                            active
+                    ));
+                }
+            }
+            return Optional.empty();
+        } catch (FileNotFoundException e) {
+            return Optional.empty();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
