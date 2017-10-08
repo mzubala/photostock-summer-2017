@@ -18,6 +18,7 @@ public class ChatServer {
         ServerSocket serverSocket = new ServerSocket(6661);
         while (true) {
             Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connected " + clientSocket.getInetAddress());
             Client client = new Client(this, clientSocket.getInputStream(), clientSocket.getOutputStream());
             clients.add(client);
             new Thread(client).start();
@@ -45,12 +46,14 @@ public class ChatServer {
                     server.clientDisconnected(this);
                     return;
                 }
+                System.out.println("Client name is " + name);
                 while (true) {
                     String msg = bufferedReader.readLine();
                     if(msg == null) {
                         server.clientDisconnected(this);
                         return;
                     }
+                    System.out.println("Client " + name + " sent message " + msg);
                     server.newMessage(msg, this);
                 }
             } catch (IOException e) {
@@ -69,6 +72,7 @@ public class ChatServer {
     }
 
     private void clientDisconnected(Client client) {
+        System.out.println("Client " + client.name + " disconnected");
         this.clients.remove(client);
     }
 
